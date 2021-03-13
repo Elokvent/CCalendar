@@ -11,7 +11,7 @@ void exitProgram(void);
 
 int getFirstDate(int , int );
 
-void printCalendar(int ); 
+void printCalendar(int, int, int ); 
 
 int run = TRUE;
 
@@ -26,7 +26,7 @@ char *months[] = {
     "July",
     "August",
     "September",
-    "October"
+    "October",
     "November",
     "December" };
 
@@ -40,7 +40,7 @@ char *days[] = {
     "Su",
 };
 
-int days_in_each_month[] = {0,31,28,30,31,30,31,31,30,31,30,31};
+int days_in_each_month[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 
 int main(){
 
@@ -49,7 +49,7 @@ while (run)
 {
     //get Input.
     getInput(&year,&month);
-    printCalendar(getFirstDate(year,month));
+    printCalendar(getFirstDate(year,month),month, year);
 }
  
 
@@ -104,8 +104,38 @@ int getFirstDate(int year, int month){ // lol ta bort dessa.
 
 }
 
-void printCalendar(int firstDay){
-    
+void printCalendar(int firstDay, int month, int year){
+    int rowcounter = 0;
+
+    //set the layout.
+    printf("--------------------%d---------------------\n",year);
+    printf("--------------------%s--------------------\n",months[month]);
+    for(int i = 0; i<7; i++){
+        printf("%6s",days[i]);
+    }
+    printf("\n---------------------------------------------\n");
+    int j;
+    if(month>1){
+     j = days_in_each_month[month-1] - firstDay +2;
+    }else{
+     j = days_in_each_month[12] - firstDay +2 ; 
+    }
+   
+    for(int i = 1;i < firstDay; i++){
+         
+         printf("%6d",j);
+         j++,rowcounter++;
+    }
+    for(int i = 1;i<=days_in_each_month[month];i++){
+        if(rowcounter == 7){
+            rowcounter=0;
+            printf("\n");
+        }
+        printf("%6d",i);
+        rowcounter++;
+    }
+    printf("\n---------------------------------------------\n");
+
 
 
 }
