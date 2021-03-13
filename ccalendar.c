@@ -7,10 +7,11 @@
 
 void getInput(int *year, int *month);
 
-void computeInput(int);
-
 void exitProgram(void);
 
+int getFirstDate(int , int );
+
+void printCalendar(int ); 
 
 int run = TRUE;
 
@@ -29,6 +30,16 @@ char *months[] = {
     "November",
     "December" };
 
+char *days[] = {
+    "Mo",
+    "Tu",
+    "We",
+    "Th",
+    "Fr",
+    "Sa",
+    "Su",
+};
+
 int days_in_each_month[] = {0,31,28,30,31,30,31,31,30,31,30,31};
 
 int main(){
@@ -38,9 +49,7 @@ while (run)
 {
     //get Input.
     getInput(&year,&month);
-    printf("the numbers you entered %d - %d\n",year,month);
-    //computeInput();
-
+    printCalendar(getFirstDate(year,month));
 }
  
 
@@ -68,21 +77,36 @@ void getInput(int *year, int *month){
 
 }
 
-void computeInput(int userInput){
-//
-if(userInput == STOP){
-    exitProgram();
-    }
-}
 
-void calculateInput(int userInput){
-    
-} 
+
 void exitProgram(){
     //cleanup, exit program.
     // ? clean screen ? etc. 
 
     printf("thanks for using my calendar");
     run = FALSE;
+}
+
+int getFirstDate(int year, int month){ // lol ta bort dessa.
+    //calculate yearcode.
+    int yearCode = ((year % 100) + ((year % 100)/4)) % 7;
+    // monthcode using the position later on that month to get specific numbers.
+    int monthCode[] = {0,0,3,3,6,1,4,6,2,5,0,3,5}; // move out later on.
+    // get century code.
+    int centuryCode [] = {4,2,0,6,4,2,0}; // testing first by hardcoding. 6
+    //get leap year status.
+    int leapYear = ((!(year % 4) && (year % 100)) || !(year % 400)) ? TRUE : FALSE;
+    int whichCentury = 3;
+
+    //got which day the 1 is in the month -> get back to main.
+    return (yearCode + monthCode[month] + 6 + 1 - leapYear) % 7; 
+    
+
+}
+
+void printCalendar(int firstDay){
+    
+
+
 }
 
